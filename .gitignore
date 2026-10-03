@@ -1,0 +1,5 @@
+venv/
+__pycache__/
+*.py[cod]
+.env
+API_AI_work/.env
