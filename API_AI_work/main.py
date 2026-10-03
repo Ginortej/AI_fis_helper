@@ -1,38 +1,18 @@
-from fastapi import FastAPI, Depends
-from config import settings
 import uvicorn
+from fastapi import FastAPI
+
+from config.settings import settings
+from routers.esp_socket import router as esp_router
 
 
-
-app = FastAPI(title=settings.settings.app_title)
-
-
+app = FastAPI(title=settings.app_title)
+app.include_router(esp_router)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def main():
-    uvicorn.run(app)
-
-
-
-
-
+@app.get("/health")
+def health() -> dict[str, str]:
+    return {"status": "ok"}
 
 
 if __name__ == "__main__":
-    main()
+    uvicorn.run(app, host=settings.host, port=settings.port)
